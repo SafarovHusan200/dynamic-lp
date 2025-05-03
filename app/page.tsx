@@ -1,3 +1,4 @@
+'use server';
 import { Carousel } from '../components/carousel';
 import { Features } from '../components/features';
 import { Testimonials } from '../components/testimonials';
@@ -7,15 +8,17 @@ import { Navigation } from '../components/navigation';
 import { Footer } from '../components/footer';
 
 import AboutUs from '@/components/about-us';
+import { createClient } from '@/utils/supabase/client';
 
-export default function Page() {
+export default async function Page() {
+  const supabase = await createClient();
+  const { data: carouselItems } = await supabase.from('carousel__items').select();
+
   return (
     <div className="min-h-screen bg-background font-sans antialiased">
       <Navigation />
       <main className="flex flex-col items-center justify-center">
-        <section className="w-full">
-          <Carousel />
-        </section>
+        <section className="w-full">{carouselItems && <Carousel items={carouselItems} />}</section>
 
         <AboutUs />
 
