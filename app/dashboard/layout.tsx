@@ -16,6 +16,7 @@ import { Fragment } from 'react';
 type LayoutProps = {
   children: React.ReactNode;
 };
+
 function generateBreadcrumbs(pathname: string) {
   const segments = pathname.slice(1).split('/');
 
